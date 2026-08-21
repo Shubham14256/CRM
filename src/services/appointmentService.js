@@ -67,4 +67,39 @@ export const createappointments = async (patientId, doctorId, appointmentTime) =
         return[];
 
     }
+};
+
+
+//UPDATE APPOINTMENTS TABLE 
+
+export const UpdateAppointmnetStatus = async(AppointId,status) =>{
+    try{
+        const ValidStatuses = ['pending', 'confirmed', 'cancelled','no show'];
+
+        if(!ValidStatuses.includes(status)){
+            console.warn(`⚠️  Invalid status: ${status}`);
+            return null;
+        }
+        console.log(`📝 Updating appointment ${appointmentId} status to: ${status}`);
+
+        const {data,error} = await suphabase
+        .from('appointments')
+        .update({status , status})
+        .eq('id', appointmentId)
+        .select()
+        .single();
+
+
+        if(error){
+            console.error('❌ Error updating appointment:', error);
+            return null;
+        }
+
+           console.log('✅ Appointment status updated');
+           return data;
+    }catch(error){
+        console.error('❌ Exception in updateAppointmentStatus:', error);
+         return null;
+    }
+
 }
